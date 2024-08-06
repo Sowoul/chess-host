@@ -3,9 +3,12 @@ from flask_socketio import SocketIO, join_room, leave_room, send
 from chess import Board, Pawn, Rook, Knight, Bishop, Queen, King
 from string import ascii_uppercase
 from random import choice
+import eventlet
+
 
 app = Flask(__name__)
-socket = SocketIO(app=app)
+socket = SocketIO(app, async_mode='eventlet')
+
 app.config["SECRET_KEY"] = "IDK123"
 rooms = {}
 
