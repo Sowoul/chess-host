@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Chess Beta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/path-to-your-background-image.png') no-repeat center center/cover;
+            z-index: -1;
+        }
+
+        .card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 2px solid #06b575;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+        }
+
+        .header {
+            font-size: 2rem;
+            color: #f0d9b5;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .form-control {
+            background-color: #333;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:hover{
+            background-color: #3a3a3a;
+        }
+        .form-control:focus {
+            outline: none;
+            background-color: #444;
+            color:#cae4da;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background-color: #06b575;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s, box-shadow 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #4ade9b;
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .chess-icon {
+            font-size: 4rem;
+            color: #f0d9b5;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #aaaaaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="card">
+        <i class="fas fa-chess-knight chess-icon"></i>
+        <div class="header">Chess Beta Login</div>
+        <form method="POST" autocomplete="off">
+            <div class="form-group">
+                <input id="name" name="name" placeholder="Enter your name" type="text" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <input id="room" name="room" placeholder="Room to join (optional)" type="text" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="footer">By Ojaswa Sharma <a href="https://github.com/Sowoul/chess" style="color:#06b575">Source Code</a></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

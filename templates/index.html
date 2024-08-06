@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Beta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: #252525;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .header {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header .back {
+            position: absolute;
+            left: 30px;
+            top: 70%;
+            transform: translateY(-50%);
+            padding: 10px 16px;
+            border: none;
+            background-color: #4a4a4a;
+            color: #ffffff;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .header .back:hover {
+            background-color: #5a5a5a;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .header .back:active {
+            background-color: #333;
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .status-bar {
+            font-size: 1rem;
+            color: #c5c5c5;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .board-container {
+            display: grid;
+            grid-template-columns: repeat(9, 60px);
+            grid-template-rows: repeat(9, 60px);
+            gap: 0;
+            position: relative;
+        }
+
+        .square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 3.75em;
+            color: #141212;
+            user-select: none;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .square:nth-child(odd) {
+            background-color: #333;
+        }
+
+        .square:nth-child(even) {
+            background-color: #444;
+        }
+
+        .square:hover {
+            background-color: #00ffaabe !important;
+            box-shadow: 0 0 40px rgba(42, 171, 111, 0.8), 0 0 50px rgba(42, 171, 107, 0.6);
+            z-index: 10;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            width: 60px;
+            height: 60px;
+            color: #dbdada;
+            background-color: #2a2a2a;
+        }
+
+        .white {
+            color: #ffffff !important;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            background-color: #4a4a4a;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #5a5a5a;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .fa {
+            margin-right: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .reset, .undo, .redo, .switch-sides{
+            height: 60px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #4a4a4a;
+            transition: background-color 0.3s ease, transform 0.3s;
+            z-index: 10;
+            margin: 0 14px;
+        }
+        .switch-sides {
+            background-color: #db87b3;
+        }
+        .switch-sides:hover {
+            background-color: #d8a1bd;
+        }
+        .reset {
+            background-color: #d12a2a;
+        }
+        .undo {
+            background-color: #4a4a4a;
+        }
+        .redo {
+            background-color: #4a4a4a;
+        }
+        .reset:hover {
+            background-color: #b02020;
+            transform: scale(1.1);
+        }
+
+        .txt {
+            font-size: 1.8rem;
+            color: #f8f8f8;
+        }
+        .glow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            font-size: 3.75em;
+            user-select: none;
+            color: #141212;
+            background-color: #3dcc57;
+            box-shadow: 0 0 30px rgba(61, 204, 87, 0.8), 0 0 40px rgba(61, 204, 87, 0.6);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 1000;
+        }
+
+        .glow:hover {
+            background-color: #2aab40;
+            box-shadow: 0 0 40px rgba(42, 171, 64, 0.8), 0 0 50px rgba(68, 255, 99, 0.829);
+            z-index: 150;
+        }
+
+        .footer {
+            font-size: 0.875rem;
+            color: #c5c5c5;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back" onclick="goback(event)"><div class="txt">↩</div></button>
+            Room : {{code}}
+        </div>
+        <div class="status-bar" id="status">Status: Ready</div>
+        <div class="board-container" id="bd">
+            <div class="label"></div>
+            <div class="label">a</div>
+            <div class="label">b</div>
+            <div class="label">c</div>
+            <div class="label">d</div>
+            <div class="label">e</div>
+            <div class="label">f</div>
+            <div class="label">g</div>
+            <div class="label">h</div>
+        </div>
+        <div class="controls">
+            <button class="reset" onclick="reset(event)">
+                <div class="txt">↺</div>
+            </button>
+            <button class="undo" onclick="undo(event)">
+                <div class="txt">⟲</div>
+            </button>
+            <button class="redo" onclick="redo(event)">
+                <div class="txt">⟳</div>
+            </button>
+            <button class="switch-sides" onclick="switchsides(event)">
+                <div class="txt">⥯</div>
+            </button>
+        </div>
+        <div class="footer">
+            <p>By Ojaswa Sharma, <a href="https://github.com/Sowoul/chess" style="color:#2aab40", target="_blank">Source Code</a></p>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
+    <script>
+        var side = 0
+        var socket = io.connect('/');
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', '/getSide', true)
+        xhr.send()        
+        xhr.onreadystatechange = function(){
+            side=xhr.responseText==="0"?0:1;
+        }
+        const sto = xhr.responseText
+        var board = "";
+        var start = "";
+        var to = "";
+        
+        socket.on('connect', function () {
+            console.log("Connected");
+            document.getElementById('status').textContent = 'Status: Connected';
+        });
+    
+        socket.on('getboard', function (msg) {
+            board = msg.board;
+            renderBoard();
+        });
+    
+        socket.on('failure', function (msg) {
+            document.getElementById('status').textContent = 'Status: ' + msg.reason;
+            renderBoard();
+        });
+    
+        function reset(event) {
+            event.preventDefault();
+            socket.emit('resetboard');
+            document.getElementById('status').textContent = 'Status: Board Reset';
+        }
+    
+        function switchsides(event) {
+            side = (side === 0) ? 1 : 0;
+            renderBoard();
+        }
+    
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Escape" && start !== "") {
+                renderBoard();
+            }
+        });
+    
+        document.getElementById("bd").addEventListener('click', function (event) {
+            if (event.target.classList.contains('square')) {
+                if (start === "") {
+                    start = event.target.id;
+                    event.target.style.backgroundColor = "#3dcc57";
+                    event.target.classList.remove("square");
+                    event.target.classList.add("glow");
+                } else if (to === "") {
+                    to = event.target.id;
+                    socket.emit('move', {
+                    board: board,
+                    start: start,
+                    to: to
+                    });
+                    document.getElementById('status').textContent = 'Status: Move from ' + start + ' to ' + to;
+                    }
+                }
+            })
+    
+        function renderBoard() {
+            var bd = document.getElementById("bd");
+            bd.innerHTML = '';
+    
+            bd.innerHTML += `<div class="label"></div>`;
+            for (let colIndex = 0; colIndex < 8; colIndex++) {
+                bd.innerHTML += `<div class="label">${String.fromCharCode(97 + colIndex)}</div>`;
+            }
+            
+            for (let rowIndex = 0; rowIndex < 8; rowIndex++) {
+                let row = (side === 0) ? rowIndex : 7 - rowIndex; 
+                bd.innerHTML += `<div class="label">${8 - row}</div>`;
+                for (let colIndex = 0; colIndex < 8; colIndex++) {
+                    let colLetter = String.fromCharCode(97 + colIndex);
+                    let squareId = colLetter + (8 - row);
+                    let square = document.createElement('div');
+                    square.className = 'square';
+                    square.id = squareId;
+    
+                    if ((row + colIndex) % 2 != 0) {
+                        square.style.backgroundColor = '#333';
+                    } else {
+                        square.style.backgroundColor = '#444';
+                    }
+    
+                    let pieceRowIndex = (side === 0) ? rowIndex : 7 - rowIndex;
+                    
+                    if (board[pieceRowIndex][colIndex]) {
+                        square.textContent = board[pieceRowIndex][colIndex].type;
+                        if (board[pieceRowIndex][colIndex].color === 'W') {
+                            square.classList.add('white');
+                        }
+                    }
+    
+                    bd.appendChild(square);
+                }
+            }
+    
+            bd.innerHTML += `<div class="label"></div>`;
+            for (let i = 0; i < 8; i++) {
+                bd.innerHTML += `<div class="label">${String.fromCharCode(97 + i)}</div>`;
+            }
+            start = "";
+            to = "";
+        }
+    
+        function undo(event) {
+            event.preventDefault();
+            socket.emit('undo');
+            document.getElementById('status').textContent = 'Status: Undo Move';
+        }
+    
+        function redo(event) {
+            event.preventDefault();
+            socket.emit('redo');
+            document.getElementById('status').textContent = 'Status: Redo Move';
+        }
+
+        function goback(event){
+            event.preventDefault()
+            window.location.replace('/')
+        }
+    </script>
+    </body>
+</html>
