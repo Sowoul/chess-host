@@ -139,11 +139,11 @@ class Queen(Piece):
             step_x = 1 if x2 > x1 else -1
             step_y = 1 if y2 > y1 else -1
             
-            if x1 == x2:  # vertical movement
+            if x1 == x2: 
                 for y in range(y1 + step_y, y2, step_y):
                     if board.getpiece(chr(x1 + ord('a')) + str(8 - y)):
                         return False
-            elif y1 == y2:  # horizontal movement
+            elif y1 == y2: 
                 for x in range(x1 + step_x, x2, step_x):
                     if board.getpiece(chr(x + ord('a')) + str(8 - y1)):
                         return False
