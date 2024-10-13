@@ -7,7 +7,7 @@ import eventlet
 
 
 app = Flask(__name__)
-socket = SocketIO(app, async_mode='eventlet')
+socket = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*")
 
 app.config["SECRET_KEY"] = "IDK123"
 rooms = {}
