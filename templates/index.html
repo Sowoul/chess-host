@@ -374,7 +374,7 @@ button:active {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
     <script>
         var side = 0
-        var socket = io.connect('/');
+        var socket = io.connect('https://chess.koyeb.app/chess');
         var xhr = new XMLHttpRequest()
         xhr.open('GET', '/getSide', true)
         xhr.send()        
